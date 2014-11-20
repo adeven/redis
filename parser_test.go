@@ -3,7 +3,7 @@ package redis
 import (
 	"testing"
 
-	"gopkg.in/bufio.v1"
+	"github.com/adjust/bufio"
 )
 
 func BenchmarkParseReplyStatus(b *testing.B) {

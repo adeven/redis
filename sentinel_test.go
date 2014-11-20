@@ -9,7 +9,7 @@ import (
 	"text/template"
 	"time"
 
-	"gopkg.in/redis.v2"
+	"github.com/adjust/redis"
 )
 
 func startRedis(port string) (*exec.Cmd, error) {
