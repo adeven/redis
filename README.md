@@ -14,15 +14,15 @@ Supports:
 - Redis Sentinel.
 - Redis Cluster: https://github.com/bsm/redis-cluster.
 
-API docs: http://godoc.org/gopkg.in/redis.v2.
-Examples: http://godoc.org/gopkg.in/redis.v2#pkg-examples.
+API docs: http://godoc.org/github.com/adjust/redis.
+Examples: http://godoc.org/github.com/adjust/redis#pkg-examples.
 
 Installation
 ------------
 
 Install:
 
-    go get gopkg.in/redis.v2
+    go get github.com/adjust/redis
 
 Look and feel
 -------------

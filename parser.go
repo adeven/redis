@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"gopkg.in/bufio.v1"
+	"github.com/adjust/bufio"
 )
 
 type multiBulkParser func(rd *bufio.Reader, n int64) (interface{}, error)

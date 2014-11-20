@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/adjust/redis"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"gopkg.in/redis.v2"
 )
 
 var _ = Describe("Commands", func() {

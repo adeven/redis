@@ -9,7 +9,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"gopkg.in/bufio.v1"
+	"github.com/adjust/bufio"
 )
 
 var (
