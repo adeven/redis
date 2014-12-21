@@ -1,23 +1,54 @@
-package redis_test
+package redis
 
 import (
-	"bytes"
+	"testing"
 
-	"github.com/vmihailenco/bufio"
-	. "launchpad.net/gocheck"
-
-	"github.com/vmihailenco/redis"
+	"gopkg.in/bufio.v1"
 )
 
-type ParserTest struct{}
+func BenchmarkParseReplyStatus(b *testing.B) {
+	benchmarkParseReply(b, "+OK\r\n", nil, false)
+}
 
-var _ = Suite(&ParserTest{})
+func BenchmarkParseReplyInt(b *testing.B) {
+	benchmarkParseReply(b, ":1\r\n", nil, false)
+}
 
-func (t *ParserTest) TestParseReq(c *C) {
-	buf := bytes.NewBufferString("*3\r\n$3\r\nSET\r\n$3\r\nkey\r\n$5\r\nhello\r\n")
-	rd := bufio.NewReaderSize(buf, 1024)
+func BenchmarkParseReplyError(b *testing.B) {
+	benchmarkParseReply(b, "-Error message\r\n", nil, true)
+}
 
-	args, err := redis.ParseReq(rd)
-	c.Check(err, IsNil)
-	c.Check(args, DeepEquals, []string{"SET", "key", "hello"})
+func BenchmarkParseReplyString(b *testing.B) {
+	benchmarkParseReply(b, "$5\r\nhello\r\n", nil, false)
+}
+
+func BenchmarkParseReplySlice(b *testing.B) {
+	benchmarkParseReply(b, "*2\r\n$5\r\nhello\r\n$5\r\nworld\r\n", parseSlice, false)
+}
+
+func benchmarkParseReply(b *testing.B, reply string, p multiBulkParser, wanterr bool) {
+	b.StopTimer()
+
+	buf := &bufio.Buffer{}
+	rd := bufio.NewReader(buf)
+	for i := 0; i < b.N; i++ {
+		buf.WriteString(reply)
+	}
+
+	b.StartTimer()
+
+	for i := 0; i < b.N; i++ {
+		_, err := parseReply(rd, p)
+		if !wanterr && err != nil {
+			panic(err)
+		}
+	}
+}
+
+func BenchmarkAppendArgs(b *testing.B) {
+	buf := make([]byte, 0, 64)
+	args := []string{"hello", "world", "foo", "bar"}
+	for i := 0; i < b.N; i++ {
+		appendArgs(buf, args)
+	}
 }
