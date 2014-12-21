@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"gopkg.in/redis.v2"
+	"github.com/adjust/redis"
 
-	. "gopkg.in/check.v1"
+	. "github.com/adjust/check"
 )
 
 const redisAddr = ":6379"

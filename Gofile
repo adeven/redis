@@ -1,0 +1,21 @@
+{
+    "env" : [    
+        {
+            "name" : "development",
+            "packages": [
+                { "name" : "github.com/adjust/bufio", "branch" : "master" },
+                { "name" : "github.com/adjust/check", "branch" : "v1" },
+                { "name" : "github.com/adjust/redis", "branch" : "." }
+            ]
+        },
+        {
+            "name" : "production",
+            "packages": [
+                { "name" : "github.com/adjust/bufio", "branch" : "master" },
+                { "name" : "github.com/adjust/check", "branch" : "v1" },
+                { "name" : "github.com/adjust/redis", "branch" : "." }
+            ]
+        }
+   ],
+   "testdir": "."
+}

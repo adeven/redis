@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"gopkg.in/bufio.v1"
+	"github.com/adjust/bufio"
 )
 
 var (
