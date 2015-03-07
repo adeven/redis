@@ -4,10 +4,6 @@
             "name" : "development",
             "packages": [
                 {
-                    "name" : "github.com/adjust/redis",
-                    "branch" : "upstream"
-                },
-                {
                     "name" : "github.com/adjust/bufio",
                     "branch" : "master"
                 },
@@ -24,10 +20,6 @@
         {
             "name" : "production",
             "packages": [
-                {
-                    "name" : "github.com/adjust/redis",
-                    "branch" : "upstream"
-                },
                 {
                     "name" : "github.com/adjust/bufio",
                     "branch" : "master"
@@ -46,10 +38,6 @@
             "name" : "staging",
             "packages": [
                 {
-                    "name" : "github.com/adjust/redis",
-                    "branch" : "upstream"
-                },
-                {
                     "name" : "github.com/adjust/bufio",
                     "branch" : "master"
                 },
@@ -67,10 +55,6 @@
         {
             "name" : "jenkins",
             "packages": [
-               {
-                    "name" : "github.com/adjust/redis",
-                    "branch" : "upstream"
-                },
                 {
                     "name" : "github.com/adjust/bufio",
                     "branch" : "master"
