@@ -57,27 +57,27 @@ func (c *Pipeline) Exec() ([]Cmder, error) {
 		return []Cmder{}, nil
 	}
 
-	cn, err := c.conn()
-	if err != nil {
-		setCmdsErr(cmds, err)
+	if err := c.ExecCmds(cmds); err != nil {
 		return cmds, err
 	}
 
-	if err := c.execCmds(cn, cmds); err != nil {
-		c.freeConn(cn, err)
-		return cmds, err
-	}
-
-	c.putConn(cn)
 	return cmds, nil
 }
 
-func (c *Pipeline) execCmds(cn *conn, cmds []Cmder) error {
-	if err := c.writeCmd(cn, cmds...); err != nil {
+func (c *Pipeline) ExecCmds(cmds []Cmder) error {
+	if c.closed {
+		return errClosed
+	}
+	cn, err := c.conn()
+	if err != nil {
 		setCmdsErr(cmds, err)
 		return err
 	}
-
+	if err := c.writeCmd(cn, cmds...); err != nil {
+		setCmdsErr(cmds, err)
+		c.freeConn(cn, err)
+		return err
+	}
 	var firstCmdErr error
 	for _, cmd := range cmds {
 		if err := cmd.parseReply(cn.rd); err != nil {
@@ -86,6 +86,10 @@ func (c *Pipeline) execCmds(cn *conn, cmds []Cmder) error {
 			}
 		}
 	}
-
-	return firstCmdErr
+	if firstCmdErr != nil {
+		c.freeConn(cn, firstCmdErr)
+		return firstCmdErr
+	}
+	c.putConn(cn)
+	return nil
 }
